@@ -108,7 +108,7 @@ inline double aatof(const char*in,const char* splitter=(char*)" ")
 inline int aatoi(const char*in)
 {
 	if(strlen(in)) return atoi(in);
-	else return IBAD;
+	else return (int) IBAD;
 }
 void split(std::string &temp,std::vector<double> &data,std::string splitter)
 {
@@ -321,7 +321,7 @@ int main(int argc,char** argv)
 			if(vattribs[i].size()==temp.size()&&temp.find(vattribs[i])==0/*std::string::npos*/)
 			{
 				prevkey=i;nkeys++;
-				std::cout<<"££££££££££££££££££££££££  "<<line<<"  ££££££££££££££££££££££££"<<std::endl;
+				std::cout<<"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  "<<line<<"  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"<<std::endl;
 					if(getlongline(traceFile,line,temp))
 					{
 						if((il=temp.length())>0)
@@ -379,17 +379,17 @@ int main(int argc,char** argv)
 	size_t m=(size_t)vecmap["NumLinConstraints"][0],ii;
 	size_t n=(size_t)vecmap["NumStocks"][0];
 	size_t nf=(size_t)vecmap["NumFactors"][0];
-	vector A=getvector(vecmap,"AAA");
-	vector L=getvector(vecmap,"lower");
-	vector U=getvector(vecmap,"upper");
+	vector A=getvector(vecmap,(char*)"AAA");
+	vector L=getvector(vecmap,(char*)"lower");
+	vector U=getvector(vecmap,(char*)"upper");
 	vector alpha=&vecmap["alpha"].front();
-	vector bench=getvector(vecmap,"BenchmarkOrZero");
+	vector bench=getvector(vecmap,(char*)"BenchmarkOrZero");
 	vector Q=&vecmap["Q"].front();
 	double gamma=(double)vecmap["gamma"][0];
-	vector initial=(vector)getvector(vecmap,"Initial");
+	vector initial=(vector)getvector(vecmap,(char*)"Initial");
 	double delta=(double)vecmap["delta"][0];
-	vector buy=getvector(vecmap,"buy");
-	vector sell=getvector(vecmap,"sell");
+	vector buy=getvector(vecmap,(char*)"buy");
+	vector sell=getvector(vecmap,(char*)"sell");
 	double kappa=(double)vecmap["kappa"][0];
 	long basket=(long)vecmap["basket"][0];
 	long trades=(long)vecmap["trades"][0];
@@ -402,31 +402,31 @@ int main(int argc,char** argv)
 	double rmin=(double)vecmap["Rmin"][0];
 	double rmax=(double)vecmap["Rmax"][0];
 	int round=(int)vecmap["m_Round"][0];
-	vector minlot=getvector(vecmap,"min_lot");
-	vector sizelot=getvector(vecmap,"size_lot");
+	vector minlot=getvector(vecmap,(char*)"min_lot");
+	vector sizelot=getvector(vecmap,(char*)"size_lot");
 	size_t ncomp=(size_t)vecmap["ncomp"][0];
-	vector Comp=getvector(vecmap,"Composite");
+	vector Comp=getvector(vecmap,(char*)"Composite");
 	if(vecmap.find("Composite")!=vecmap.end())
 		Comp=&vecmap["Composite"].front();
 	double value=(double)vecmap["LSValue"][0];
 	double valueL=(double)vecmap["LSValueL"][0];
 	dimen npiece=(dimen)vecmap["npiece"][0];
-	vector hpiece=getvector(vecmap,"hpiece");
-	vector pgrad=getvector(vecmap,"pgrad");
+	vector hpiece=getvector(vecmap,(char*)"hpiece");
+	vector pgrad=getvector(vecmap,(char*)"pgrad");
 	dimen nabs=(dimen)vecmap["nabs"][0];
-	vector A_abs=getvector(vecmap,"Abs_A");
+	vector A_abs=getvector(vecmap,(char*)"Abs_A");
 	dimen mabs=(dimen)vecmap["mabs"][0];
-	vector I_Af=getvector(vecmap,"I_A");
+	vector I_Af=getvector(vecmap,(char*)"I_A");
 
 	std::valarray<dimen> I_A(mabs);
 	for(ii=0;ii<mabs;++ii)
 		I_A[ii]=(size_t)I_Af[ii];
 
-	vector U_abs=getvector(vecmap,"Abs_U");
-	vector L_abs=getvector(vecmap,"Abs_L");
-	vector FC=getvector(vecmap,"FCnil");
-	vector FL=getvector(vecmap,"FLnil");
-	vector SV=getvector(vecmap,"SVnil");
+	vector U_abs=getvector(vecmap,(char*)"Abs_U");
+	vector L_abs=getvector(vecmap,(char*)"Abs_L");
+	vector FC=getvector(vecmap,(char*)"FCnil");
+	vector FL=getvector(vecmap,(char*)"FLnil");
+	vector SV=getvector(vecmap,(char*)"SVnil");
 	double minRisk=(double)vecmap["minRisk"][0];
 	double maxRisk=(double)vecmap["maxRisk"][0];
 	double ogamma=(double)vecmap["ogamma1"][0];
@@ -435,7 +435,7 @@ int main(int argc,char** argv)
 	int tradesell=(int)vecmap["tradesell"][0];
 	int longbasket=(int)vecmap["longbasket"][0];
 	int shortbasket=(int)vecmap["shortbasket"][0];
-	vector mask=(vector)getvector(vecmap,"mask");
+	vector mask=(vector)getvector(vecmap,(char*)"mask");
 
 
 
@@ -487,7 +487,7 @@ int main(int argc,char** argv)
 	fprintf(RES,"\n");
 	fclose(RES);
 	printf("%s\n",Return_Message(back));
-	printf("Time taken for optimisation; %d seconds\n",t2);
+	printf("Time taken for optimisation; %ld seconds\n",t2);
 	time(&ltime);
 	printf( "Finished; %s",ctime(&ltime));
 	char mess[500];
